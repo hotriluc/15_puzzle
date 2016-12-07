@@ -1,21 +1,25 @@
-
+package defPackage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
 
  
 public class Puzzle_Game extends JFrame {
-	
+	ArrayList<ProfileObj> prf = new ArrayList<ProfileObj>();
     private JPanel panel = new JPanel(new GridLayout(4, 4, 2, 2));
     private static Random Random_Pos_Generetor = new Random();
-    private int[][] num_array = new int[4][4];
+    private static int[][] num_array = new int[4][4];
     private  javax.swing.Timer t;
     private static long second , minute;
+    private JTextField txtUname;
  
-
-    
+    private static void prfAdd(String uname,int[][] pos) throws IOException{
+    	Select.prf.add(new ProfileObj(uname,pos));
+    	Select.serialize();
+    }
     
     public static void main(String[] args) {
     	 EventQueue.invokeLater(new Runnable() {
@@ -39,6 +43,7 @@ public class Puzzle_Game extends JFrame {
     public void init(){
     	
     	 JLabel Time_Label = new JLabel(""); 
+    	 Time_Label.setBackground(Color.LIGHT_GRAY);
     	 Time_Label.setFont(new Font("Showcard Gothic", Font.ITALIC, 17));
     	 Time_Label.setHorizontalAlignment(SwingConstants.CENTER);
     	 
@@ -72,7 +77,7 @@ public class Puzzle_Game extends JFrame {
     
     	
         getContentPane().setBackground(SystemColor.menu);
-        setBounds(200, 200, 500, 373);
+        setBounds(200, 200, 458, 392);
         setResizable(false);
         
        
@@ -80,7 +85,7 @@ public class Puzzle_Game extends JFrame {
         Container container = getContentPane();
       
         getContentPane().setLayout(null);
-        panel.setBounds(169, 11, 312, 322);
+        panel.setBounds(135, 22, 300, 300);
         panel.setBackground(SystemColor.inactiveCaption);
         container.add(panel);
         
@@ -88,7 +93,7 @@ public class Puzzle_Game extends JFrame {
         
        
        
-        JButton NewGameButton = new JButton("New Game");// New_game_button
+        JButton NewGameButton = new JButton("New Position");// New_game_button
         NewGameButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
         NewGameButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -121,17 +126,41 @@ public class Puzzle_Game extends JFrame {
         	}
         });
         
-        NewGameButton.setBounds(31, 38, 106, 41);
+        NewGameButton.setBounds(10, 25, 115, 41);
         getContentPane().add(NewGameButton);
         
        
       
-        ExitButton.setBounds(31, 134, 106, 41);
+        ExitButton.setBounds(10, 77, 115, 41);
         getContentPane().add(ExitButton);
         
        
-        Time_Label.setBounds(31, 258, 106, 75);
+        Time_Label.setBounds(19, 236, 106, 75);
         getContentPane().add(Time_Label);
+        
+        JLabel lblUname = new JLabel("Username:");
+        lblUname.setBounds(135, 336, 90, 14);
+        getContentPane().add(lblUname);
+        
+        txtUname = new JTextField();
+        txtUname.setBounds(199, 333, 163, 20);
+        getContentPane().add(txtUname);
+        txtUname.setColumns(10);
+        
+        JButton btnSave = new JButton("Save");
+        btnSave.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		try {
+					if (txtUname.getText()!=""){
+						prfAdd(txtUname.getText(),num_array);
+					}
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+        	}
+        });
+        btnSave.setBounds(372, 332, 63, 23);
+        getContentPane().add(btnSave);
       
         
         

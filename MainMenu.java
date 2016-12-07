@@ -1,12 +1,16 @@
+package defPackage;
 import java.awt.EventQueue;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 public class MainMenu extends JFrame  {
-
-	private JFrame frame;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Launch the application.
@@ -52,7 +56,13 @@ public class MainMenu extends JFrame  {
 		Select_P_Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setVisible(false);
-				JFrame fr = new Select();
+				JFrame fr = null;
+				try {
+					fr = new Select();
+				} catch (ClassNotFoundException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				fr.setVisible(true);
 				
 			}
@@ -80,7 +90,4 @@ public class MainMenu extends JFrame  {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void init() {
-		
-	}
 }
