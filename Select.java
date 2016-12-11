@@ -1,5 +1,3 @@
-package defPackage;
-
 import javax.swing.JFrame;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -60,7 +58,8 @@ class ProfileObj implements Serializable {
 		}
 		
 	public static void main(String[] args) throws IOException, ClassNotFoundException{
-		
+		Select window = new Select();
+		window.setVisible(true);
 	}
 
 		public Select() throws ClassNotFoundException, IOException {

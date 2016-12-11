@@ -1,4 +1,4 @@
-package defPackage;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -41,14 +41,14 @@ public class Puzzle_Game extends JFrame {
     }
     
     public void init(){
-    	
+    	 
     	 JLabel Time_Label = new JLabel(""); 
     	 Time_Label.setBackground(Color.LIGHT_GRAY);
     	 Time_Label.setFont(new Font("Showcard Gothic", Font.ITALIC, 17));
     	 Time_Label.setHorizontalAlignment(SwingConstants.CENTER);
     	 
     	 
-    
+    	 
     	
     	final DecimalFormat dc = new DecimalFormat("00");
     	 //Time_Label.setText(dc.format(minute) + ":" + dc.format(second));
@@ -194,25 +194,39 @@ public class Puzzle_Game extends JFrame {
             invariants[k*4+l] = i;
         }
  }
- 	while (!canBeSolved(invariants));
+ 	while (!isSolvable(invariants));
  	repaintField();
     }
     
-    private boolean canBeSolved(int[] invariants) {
-        int sum = 0;
-        for (int i = 0; i < 16; i++) {
-            if (invariants[i] == 0) {
-                sum += i / 4;
-                continue;
-            }
-
-            for (int j = i + 1; j < 16; j++) {
-                if (invariants[j] < invariants[i])
-                    sum ++;
-            }
+    private boolean isSolvable(int[] invariants) {
+        int row = 0;
+        int parity = 0;
+        int blankrow = 0;
+        int gridwidth = (int) Math.sqrt(invariants.length);
+        
+        for (int i = 0  ; i < invariants.length; i ++){
+        	if (i%gridwidth == 0){
+        		row++;
+        	}
+        	if (invariants[i] == 0){
+        		blankrow = row;
+        		continue;
+        	}
+        	for (int j = i+1;j<invariants.length; j++){
+        		if (invariants[i]>invariants[j] && invariants[j]!=0){
+        			parity++;
+        		}
+        	}
+        	
         }
-        System.out.println(sum % 2 == 0);
-        return sum % 2 == 0;
+       
+        if (gridwidth % 2 == 0){
+        	if (blankrow % 2 == 0 ){
+        		return parity %2 ==0;
+        	}else {return parity %2 !=0;}
+        	
+        }else {return parity %2 ==0;}
+       
     }
  
     public void repaintField() {
@@ -305,11 +319,10 @@ public class Puzzle_Game extends JFrame {
         if (Check_if_Win()) {
         	t.stop();
             JOptionPane.showMessageDialog(null, "YOU WON", "Congratz", 1);
-            Scramble();
+           // Scramble();
             repaintField();
             setVisible(false);
             setVisible(true);
         }
     }
 }
-  
