@@ -36,11 +36,12 @@ class ProfileObj implements Serializable {
 	}
 
 }
-	public class Select extends JFrame {
+	 class Select extends JFrame {
 		private static final long serialVersionUID = -5782103906826880235L;
 		public static ArrayList<ProfileObj> prf = new ArrayList<ProfileObj>();
 	    private static final String fname="users.prf";
 	    
+		@SuppressWarnings("unchecked")
 		public static void deserialize() throws IOException,ClassNotFoundException {
             FileInputStream fis = new FileInputStream(fname);
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -72,6 +73,7 @@ class ProfileObj implements Serializable {
 			btnPlay.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					setVisible(false);
+					
 					MainMenu m = new MainMenu();
 					m.setVisible(true);
 				}
@@ -82,7 +84,10 @@ class ProfileObj implements Serializable {
 			JButton btnExit = new JButton("Exit");
 			btnExit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					System.exit(0);
+					setVisible(false);
+					
+					MainMenu m = new MainMenu();
+					m.setVisible(true);
 				}
 			});
 			btnExit.setBounds(10, 192, 307, 30);
@@ -94,6 +99,7 @@ class ProfileObj implements Serializable {
 			deserialize();
 			for (ProfileObj p : prf){
 				lModel.addElement(p.username);
+				
 			    }
 			JLabel lblSelectProfile = new JLabel("Select profile:");
 			lblSelectProfile.setBounds(10, 16, 143, 14);

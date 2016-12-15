@@ -7,7 +7,8 @@ import java.text.DecimalFormat;
 import java.util.*;
 
  
-public class Puzzle_Game extends JFrame {
+ @SuppressWarnings("serial")
+class Puzzle_Game extends JFrame {
 	ArrayList<ProfileObj> prf = new ArrayList<ProfileObj>();
     private JPanel panel = new JPanel(new GridLayout(4, 4, 2, 2));
     private static Random Random_Pos_Generetor = new Random();
@@ -19,9 +20,12 @@ public class Puzzle_Game extends JFrame {
     private static void prfAdd(String uname,int[][] pos) throws IOException{
     	Select.prf.add(new ProfileObj(uname,pos));
     	Select.serialize();
+    	
+   
     }
     
     public static void main(String[] args) {
+    	
     	 EventQueue.invokeLater(new Runnable() {
     	      public void run() {
     	        try {
@@ -52,7 +56,7 @@ public class Puzzle_Game extends JFrame {
     	
     	final DecimalFormat dc = new DecimalFormat("00");
     	 //Time_Label.setText(dc.format(minute) + ":" + dc.format(second));
-    	 
+    	Time_Label.setText(dc.format(minute) + ":" + dc.format(second));
         t = new javax.swing.Timer( 1000,
         		new ActionListener() 
         	{
@@ -153,6 +157,7 @@ public class Puzzle_Game extends JFrame {
         		try {
 					if (txtUname.getText()!=""){
 						prfAdd(txtUname.getText(),num_array);
+						txtUname.setText(null);
 					}
 				} catch (IOException ex) {
 					ex.printStackTrace();
@@ -318,11 +323,11 @@ public class Puzzle_Game extends JFrame {
         repaintField();
         if (Check_if_Win()) {
         	t.stop();
-            JOptionPane.showMessageDialog(null, "YOU WON", "Congratz", 1);
+            
            // Scramble();
             repaintField();
-            setVisible(false);
-            setVisible(true);
+          //  setVisible(false);
+            //setVisible(true);
         }
     }
 }
