@@ -16,6 +16,7 @@ class Puzzle_Game extends JFrame {
     private  javax.swing.Timer t;
     private static long mil;
     private JTextField txtUname;
+
     
     public static void setTime(long m){
     	mil=m;
@@ -54,16 +55,16 @@ class Puzzle_Game extends JFrame {
     }
     
     public void init(){
-    	 
+    	
     	 JLabel Time_Label = new JLabel(""); 
     	 Time_Label.setBackground(Color.LIGHT_GRAY);
     	 Time_Label.setFont(new Font("Showcard Gothic", Font.ITALIC, 17));
     	 Time_Label.setHorizontalAlignment(SwingConstants.CENTER);
     	 
-    	 
+    
     	 
     	
-    	final DecimalFormat dc = new DecimalFormat("000");
+    	 DecimalFormat dc = new DecimalFormat("000");
     	 //Time_Label.setText(dc.format(minute) + ":" + dc.format(second));
     	Time_Label.setText(dc.format(mil)+" sec");
     	
@@ -104,12 +105,12 @@ class Puzzle_Game extends JFrame {
      
         
        
-       
+       ////////////////////////////////////////////////////////////////////
         JButton NewGameButton = new JButton("New Position");// New_game_button
         NewGameButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
         NewGameButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		mil =0;
+        		mil = 0;
         		Time_Label.setText( dc.format(mil)+" sec" );
         		
         		t.start();
@@ -119,30 +120,31 @@ class Puzzle_Game extends JFrame {
         		
         	
         		Scramble();
-        		repaintField();
+        		repaintField(true);
         		
         	}
         });
         
-        
+        /////////////////////////////////////////////////////////
         JButton ExitButton = new JButton("Exit"); //Exit_button
         ExitButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11)); 
         ExitButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		t.stop();
         		
+        		repaintField(false);
         		setVisible(false);
         		MainMenu m = new MainMenu();
         		m.setVisible(true);
         	}
         });
-        
+        /////////////////////////////////////////////////////////
         NewGameButton.setBounds(10, 25, 115, 41);
         getContentPane().add(NewGameButton);
         
        
       
-        ExitButton.setBounds(10, 77, 115, 41);
+        ExitButton.setBounds(10, 207, 115, 41);
         getContentPane().add(ExitButton);
         
        
@@ -157,6 +159,7 @@ class Puzzle_Game extends JFrame {
         txtUname.setBounds(199, 333, 163, 20);
         getContentPane().add(txtUname);
         txtUname.setColumns(10);
+        ////////////////////////////////////////////
         
         JButton btnSave = new JButton("Save");
         btnSave.addActionListener(new ActionListener() {
@@ -172,12 +175,47 @@ class Puzzle_Game extends JFrame {
 				}
         	}
         });
+        
         btnSave.setBounds(372, 332, 63, 23);
         getContentPane().add(btnSave);
-      
+        //////////////////////////////////////
+        
+        JButton PauseButton = new JButton("Pause");
+        PauseButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
+    
+        
+        PauseButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		t.stop();
+        		repaintField(false);
+        		PauseButton.setVisible(false);
+        		
+        		JButton ResumeButton = new JButton("Resume");
+        		ResumeButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
+        		 ResumeButton.setBounds(10, 77, 115, 41);
+        		 
+        	        getContentPane().add(ResumeButton);
+        		ResumeButton.addActionListener(new ActionListener(){
+
+					
+					public void actionPerformed(ActionEvent e) {
+						ResumeButton.setVisible(false);
+						t.start();
+						repaintField(true);
+						PauseButton.setVisible(true);
+					}
+        			
+        		});
+        		
+        	}
+        });
+        
+        PauseButton.setBounds(10, 77, 115, 41);
+        getContentPane().add(PauseButton);
+        /////////////////////////////////////
         
         
-        repaintField();
+        repaintField(true);
     }
     
     
@@ -208,7 +246,7 @@ class Puzzle_Game extends JFrame {
         }
  }
  	while (!isSolvable(invariants));
- 	repaintField();
+ 	repaintField(true);
     }
     
     private boolean isSolvable(int[] invariants) {
@@ -242,23 +280,41 @@ class Puzzle_Game extends JFrame {
        
     }
  
-    public void repaintField() {
-        panel.removeAll();
- 
+    public void repaintField(boolean clickable) {
+      
+    	panel.removeAll();
         for (int i=0; i<4; i++) {
             for (int j=0; j<4; j++) {
+            	
+            	if (clickable ==true){
                 JButton button = new JButton(Integer.toString(num_array[i][j]));
                 button.setFocusable(false);
                 panel.add(button);
+               
                 if (num_array[i][j] == 0) {
                     button.setVisible(false);
-                } else
-                    button.addActionListener(new ClickListener());
+                }else{
+                    button.addActionListener(new ClickListener());}
+            	}else{
+            		JButton button = new JButton(Integer.toString(num_array[i][j]));
+            		button.setEnabled(false);
+            		panel.add(button);
+            		 if (num_array[i][j] == 0) {
+                         button.setVisible(false);
+                
+            	}
+            	}
+            	
+            	
             }
         }
+       
+    }
+    
+        
  
         //panel.validate();
-    }
+    
  
     public boolean Check_if_Win() {
         boolean status = true;
@@ -281,6 +337,7 @@ class Puzzle_Game extends JFrame {
  
     private class ClickListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+        	t.start();///
             JButton button = (JButton) e.getSource();
             button.setVisible(false);
             String name = button.getText();
@@ -328,14 +385,24 @@ class Puzzle_Game extends JFrame {
                 num_array[i][j]=0;
             }
         }
-        repaintField();
+        repaintField(true);
         if (Check_if_Win()) {
         	t.stop();
-            
-           // Scramble();
-            repaintField();
-          //  setVisible(false);
-            //setVisible(true);
+        	
+        	
+        	
+        	
+        	JOptionPane.showMessageDialog(null,
+        		    "YOU WON",
+        		    "MESSAGE",
+        		    JOptionPane.PLAIN_MESSAGE);
+        	
+        	
+        	panel.removeAll();
+        	
+          
+            setVisible(false);
+            setVisible(true);
         }
     }
 }
