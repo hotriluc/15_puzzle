@@ -9,16 +9,25 @@ import java.util.*;
  
  @SuppressWarnings("serial")
 class Puzzle_Game extends JFrame {
-	ArrayList<ProfileObj> prf = new ArrayList<ProfileObj>();
+	public ArrayList<ProfileObj> prf = new ArrayList<ProfileObj>();
     private JPanel panel = new JPanel(new GridLayout(4, 4, 2, 2));
     private static Random Random_Pos_Generetor = new Random();
     private static int[][] num_array = new int[4][4];
     private  javax.swing.Timer t;
-    private static long second , minute;
+    private static long mil;
     private JTextField txtUname;
+    
+    public static void setTime(long m){
+    	mil=m;
+    	
+    }
+    
+    public static void setProgress(int[][]na){
+    	num_array = na;
+    }
  
-    private static void prfAdd(String uname,int[][] pos) throws IOException{
-    	Select.prf.add(new ProfileObj(uname,pos));
+    private static void prfAdd(String uname,long mil,int [][]num_array) throws IOException{
+    	Select.prf.add(new ProfileObj(uname,mil,num_array));
     	Select.serialize();
     	
    
@@ -54,19 +63,18 @@ class Puzzle_Game extends JFrame {
     	 
     	 
     	
-    	final DecimalFormat dc = new DecimalFormat("00");
+    	final DecimalFormat dc = new DecimalFormat("000");
     	 //Time_Label.setText(dc.format(minute) + ":" + dc.format(second));
-    	Time_Label.setText(dc.format(minute) + ":" + dc.format(second));
+    	Time_Label.setText(dc.format(mil)+" sec");
+    	
         t = new javax.swing.Timer( 1000,
         		new ActionListener() 
         	{
                 public void actionPerformed(ActionEvent e) {
-                    Time_Label.setText(dc.format(minute) + ":" + dc.format(second));
-                    second++;
-                    if (second >= 60) {
-                        second %= 60;
-                        minute++;
-                    }
+                	
+                    Time_Label.setText( dc.format(mil)+" sec");
+                    mil++;
+                    
                 }
             }
         );
@@ -101,9 +109,8 @@ class Puzzle_Game extends JFrame {
         NewGameButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
         NewGameButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		second =0;
-        		minute = 0;
-        		Time_Label.setText(dc.format(minute) + ":" + dc.format(second));
+        		mil =0;
+        		Time_Label.setText( dc.format(mil)+" sec" );
         		
         		t.start();
         		
@@ -156,7 +163,8 @@ class Puzzle_Game extends JFrame {
         	public void actionPerformed(ActionEvent e) {
         		try {
 					if (txtUname.getText()!=""){
-						prfAdd(txtUname.getText(),num_array);
+						t.stop();
+						prfAdd(txtUname.getText(), mil,num_array);
 						txtUname.setText(null);
 					}
 				} catch (IOException ex) {

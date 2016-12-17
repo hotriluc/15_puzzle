@@ -16,12 +16,24 @@ import java.io.ObjectOutputStream;
 class ProfileObj implements Serializable {
 	private static final long serialVersionUID = 1266395111447933184L;
 	public String username;
-	public int nums[][] = new int[4][4];
+    public long mil;
+    public int nums[][] = new int[4][4];
 
-	public ProfileObj(String uname, int[][] pos) {
+	public ProfileObj(String uname, long m,int[][] pos) {
 		this.username=uname;
+		this.mil=m;
 		this.nums=pos;
+		
 	}
+		
+		public String getUname(){
+			return this.username;
+		}
+		
+		public long getMil(){
+			return this.mil;
+		}
+		
 	
 	public ProfileObj(){
 		
@@ -30,10 +42,11 @@ class ProfileObj implements Serializable {
 	public String getName() {
 		return username;
 	}
-
+	
 	public int[][] getProgress() {
 		return nums;
 	}
+
 
 }
 	 class Select extends JFrame {
@@ -69,18 +82,6 @@ class ProfileObj implements Serializable {
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			getContentPane().setLayout(null);
 
-			JButton btnPlay = new JButton("Select");
-			btnPlay.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					setVisible(false);
-					
-					MainMenu m = new MainMenu();
-					m.setVisible(true);
-				}
-			});
-			btnPlay.setBounds(10, 158, 154, 23);
-			getContentPane().add(btnPlay);
-
 			JButton btnExit = new JButton("Exit");
 			btnExit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -108,6 +109,28 @@ class ProfileObj implements Serializable {
 			JButton btnDel = new JButton("Delete");
 			btnDel.setBounds(163, 158, 154, 23);
 			getContentPane().add(btnDel);
+			
+			JButton btnPlay = new JButton("Select");
+			btnPlay.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					setVisible(false);
+					
+					MainMenu m = new MainMenu();
+					m.setVisible(true);
+					String n = prof_list.getSelectedValue();
+					for (int i=0;i<prf.size();i++){
+						if (prf.get(i).getUname().equals(n)){
+							long mil=prf.get(i).getMil();
+							int pos[][] = prf.get(i).getProgress();
+							Puzzle_Game.setTime(mil);
+							Puzzle_Game.setProgress(pos);
+							
+						}
+					}
+				}
+			});
+			btnPlay.setBounds(10, 158, 154, 23);
+			getContentPane().add(btnPlay);
 			
 		}
 
