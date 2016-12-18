@@ -1,3 +1,4 @@
+package defPackage;
 import javax.swing.JFrame;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -78,6 +79,7 @@ class ProfileObj implements Serializable {
 
 		public Select() throws ClassNotFoundException, IOException {
 			super("15_puzzle");
+			setResizable(false);
 			setBounds(200, 200, 343, 266);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			getContentPane().setLayout(null);
@@ -107,6 +109,32 @@ class ProfileObj implements Serializable {
 			getContentPane().add(lblSelectProfile);
 
 			JButton btnDel = new JButton("Delete");
+			btnDel.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String u=prof_list.getSelectedValue();
+					for (int i=0;i<prf.size();i++){
+						if (prf.get(i).getName().equals(u)){
+							    prf.remove(i);
+								lModel.removeAllElements();
+								try {
+									serialize();
+								} catch (IOException e2) {
+									e2.printStackTrace();
+								}
+						try {
+								deserialize();
+							} catch (ClassNotFoundException e1) {
+								e1.printStackTrace();
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							}
+							for (ProfileObj p : prf){
+							   lModel.addElement(p.username);
+							    }
+						}
+						}
+					}
+			});
 			btnDel.setBounds(163, 158, 154, 23);
 			getContentPane().add(btnDel);
 			

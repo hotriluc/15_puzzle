@@ -1,10 +1,11 @@
-
+package defPackage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
+import javax.swing.JOptionPane;
 
  
  @SuppressWarnings("serial")
@@ -165,7 +166,9 @@ class Puzzle_Game extends JFrame {
         btnSave.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		try {
-					if (txtUname.getText()!=""){
+					if (txtUname.getText().equals(" ")){
+						  JOptionPane.showMessageDialog(null, "Enter a valid username!", "Error", JOptionPane.INFORMATION_MESSAGE);}
+					else{
 						t.stop();
 						prfAdd(txtUname.getText(), mil,num_array);
 						txtUname.setText(null);

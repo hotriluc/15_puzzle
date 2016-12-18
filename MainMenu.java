@@ -1,4 +1,4 @@
-
+package defPackage;
 import java.awt.EventQueue;
 
 import javax.swing.*;
