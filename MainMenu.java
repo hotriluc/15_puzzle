@@ -33,9 +33,11 @@ public class MainMenu extends JFrame  {
 	 */
 	public MainMenu() {
 		super("15_puzzle");
+		setLocationRelativeTo(null);
+		setTitle("15 Puzzle");
 		setResizable(false);
 	
-		setBounds(100, 100, 240, 300);
+		setBounds(100, 100, 240, 311);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
@@ -76,18 +78,20 @@ public class MainMenu extends JFrame  {
 			}
 		});
 		
-		PlayButton.setBounds(37, 20, 150, 45);
+		PlayButton.setBounds(37, 63, 150, 45);
 		getContentPane().add(PlayButton);
 		
-		Select_P_Button.setBounds(37, 78, 150, 45);
+		Select_P_Button.setBounds(37, 119, 150, 45);
 		getContentPane().add(Select_P_Button);
 		
 		
-		ExitButton.setBounds(37, 188, 150, 45);
+		ExitButton.setBounds(37, 215, 150, 45);
 		getContentPane().add(ExitButton);
+		
+		JLabel lblNewLabel = new JLabel("MAIN MENU");
+		lblNewLabel.setFont(new Font("Roboto Bk", Font.BOLD, 25));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(10, 11, 214, 41);
+		getContentPane().add(lblNewLabel);
 	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
 }

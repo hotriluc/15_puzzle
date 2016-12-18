@@ -50,8 +50,8 @@ class ProfileObj implements Serializable {
 
 
 }
-	 class Select extends JFrame {
-		private static final long serialVersionUID = -5782103906826880235L;
+	 @SuppressWarnings("serial")
+	class Select extends JFrame {
 		public static ArrayList<ProfileObj> prf = new ArrayList<ProfileObj>();
 	    private static final String fname="users.prf";
 	    
@@ -79,12 +79,13 @@ class ProfileObj implements Serializable {
 
 		public Select() throws ClassNotFoundException, IOException {
 			super("15_puzzle");
+			setLocationRelativeTo(null);
 			setResizable(false);
-			setBounds(200, 200, 343, 266);
+			setBounds(200, 200, 335, 266);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			getContentPane().setLayout(null);
 
-			JButton btnExit = new JButton("Exit");
+			JButton btnExit = new JButton("Main menu");
 			btnExit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					setVisible(false);
@@ -141,18 +142,18 @@ class ProfileObj implements Serializable {
 			JButton btnPlay = new JButton("Select");
 			btnPlay.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					if (prof_list.isSelectionEmpty()!=true){
 					setVisible(false);
-					
-					MainMenu m = new MainMenu();
-					m.setVisible(true);
+					Puzzle_Game g = new Puzzle_Game();
+					g.setVisible(true);
 					String n = prof_list.getSelectedValue();
 					for (int i=0;i<prf.size();i++){
 						if (prf.get(i).getUname().equals(n)){
 							long mil=prf.get(i).getMil();
 							int pos[][] = prf.get(i).getProgress();
 							Puzzle_Game.setTime(mil);
-							Puzzle_Game.setProgress(pos);
-							
+							Puzzle_Game.setProgress(pos);	
+						}
 						}
 					}
 				}
