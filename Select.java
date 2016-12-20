@@ -1,8 +1,9 @@
-package defPackage;
 import javax.swing.JFrame;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JLabel;
@@ -54,7 +55,7 @@ class ProfileObj implements Serializable {
 	class Select extends JFrame {
 		public static ArrayList<ProfileObj> prf = new ArrayList<ProfileObj>();
 	    private static final String fname="users.prf";
-	    
+
 		@SuppressWarnings("unchecked")
 		public static void deserialize() throws IOException,ClassNotFoundException {
             FileInputStream fis = new FileInputStream(fname);
@@ -84,6 +85,12 @@ class ProfileObj implements Serializable {
 			setBounds(200, 200, 335, 266);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			getContentPane().setLayout(null);
+			
+			Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+			int w = (int) d.getWidth();
+			int h = (int) d.getHeight();
+			setLocation((int) (w / 2 - getWidth() / 2), (int) (h / 2 - getHeight() / 2));
+			
 
 			JButton btnExit = new JButton("Main menu");
 			btnExit.addActionListener(new ActionListener() {
@@ -144,17 +151,24 @@ class ProfileObj implements Serializable {
 				public void actionPerformed(ActionEvent arg0) {
 					if (prof_list.isSelectionEmpty()!=true){
 					setVisible(false);
-					Puzzle_Game g = new Puzzle_Game();
-					g.setVisible(true);
+					MainMenu m = new MainMenu ();
+					setVisible(false);
+					m.setVisible(true);
+					
 					String n = prof_list.getSelectedValue();
 					for (int i=0;i<prf.size();i++){
 						if (prf.get(i).getUname().equals(n)){
 							long mil=prf.get(i).getMil();
 							int pos[][] = prf.get(i).getProgress();
+							
+						//	System.out.println(pos[0][0]);
+							//System.out.println(pos[0][1]);
 							Puzzle_Game.setTime(mil);
 							Puzzle_Game.setProgress(pos);	
+							
 						}
 						}
+					
 					}
 				}
 			});

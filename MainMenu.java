@@ -1,6 +1,3 @@
-package defPackage;
-import java.awt.EventQueue;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -41,6 +38,12 @@ public class MainMenu extends JFrame  {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+		int w = (int) d.getWidth();
+		int h = (int) d.getHeight();
+		setLocation((int) (w / 2 - getWidth() / 2), (int) (h / 2 - getHeight() / 2));
+		
+	/////////////////////////////////////////////////////////////////	
 		JButton PlayButton = new JButton("Play");
 		PlayButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
 		PlayButton.addActionListener(new ActionListener() {
@@ -52,7 +55,7 @@ public class MainMenu extends JFrame  {
 			}
 		});
 		
-		
+		///////////////////////////////////////////////////////////
 		JButton Select_P_Button = new JButton("Select profile");
 		Select_P_Button.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
 		Select_P_Button.addActionListener(new ActionListener() {
@@ -69,7 +72,7 @@ public class MainMenu extends JFrame  {
 				
 			}
 		});
-		
+		///////////////////////////////////////////////////////////
 		JButton ExitButton = new JButton("Exit");
 		ExitButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
 		ExitButton.addActionListener(new ActionListener() {
@@ -77,7 +80,7 @@ public class MainMenu extends JFrame  {
 				System.exit(0);
 			}
 		});
-		
+	///////////////////////////////////////////////////////////////////	
 		PlayButton.setBounds(37, 63, 150, 45);
 		getContentPane().add(PlayButton);
 		

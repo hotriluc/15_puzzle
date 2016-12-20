@@ -1,5 +1,3 @@
-package defPackage;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -43,15 +41,9 @@ class Puzzle_Game extends JFrame {
 	}
 
 	private static void prfAdd(String uname, long mil, int[][] num_array) throws IOException {
-		int uid = get_userID(uname);
-		if (uid == -1) {
+
 			Select.prf.add(new ProfileObj(uname, mil, num_array));
 			Select.serialize();
-		} else if (uid != -1) {
-			Select.prf.set(uid, new ProfileObj(uname, mil, num_array));
-			Select.serialize();
-		}
-
 	}
 
 	public static void main(String[] args) {
@@ -94,16 +86,18 @@ class Puzzle_Game extends JFrame {
 
 			}
 		});
-
+		
 		setVisible(true);
+	
+		
+		getContentPane().setBackground(SystemColor.menu);
+		setBounds(200, 200, 458, 392);
+		setResizable(false);
+		
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int w = (int) d.getWidth();
 		int h = (int) d.getHeight();
 		setLocation((int) (w / 2 - getWidth() / 2), (int) (h / 2 - getHeight() / 2));
-
-		getContentPane().setBackground(SystemColor.menu);
-		setBounds(200, 200, 458, 392);
-		setResizable(false);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container container = getContentPane();
@@ -169,7 +163,7 @@ class Puzzle_Game extends JFrame {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if (txtUname.getText().equals(" ")) {
+					if (txtUname.getText().equals("")) {
 						JOptionPane.showMessageDialog(null, "Enter a valid username!", "Error",
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
@@ -248,9 +242,9 @@ class Puzzle_Game extends JFrame {
 	}
 
 	private boolean isSolvable(int[] invariants) {
-		int row = 0;
+		int row = 0;//текущая строка
 		int parity = 0;
-		int blankrow = 0;
+		int blankrow = 0;//строка с пустой ячейкой
 		int gridwidth = (int) Math.sqrt(invariants.length);
 
 		for (int i = 0; i < invariants.length; i++) {
@@ -273,7 +267,7 @@ class Puzzle_Game extends JFrame {
 			if (blankrow % 2 == 0) {
 				return parity % 2 == 0;
 			} else {
-				return parity % 2 != 0;
+				return parity % 2 != 0; 
 			}
 
 		} else {
