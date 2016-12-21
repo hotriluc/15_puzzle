@@ -112,21 +112,19 @@ class Solver{
     }
     
     public static void Solve(int[][] brd,int ns){
-    	int N=ns;
-    	initCorrectRowsCols(N);
-    	long start = System.currentTimeMillis();
+    	initCorrectRowsCols(ns);
         Board initial = new Board(brd);
         Solver solver = new Solver(initial);
-        long end = System.currentTimeMillis();
-        System.out.println("time elapsed: " + (end-start) + "ms");
-
         if (!solver.isSolvable())
-            System.out.println("No solution possible");
+        	Puzzle_Game.lblStatus.setText("No solution possible");
         else {
-            System.out.println("Minimum number of moves = " + solver.moves());
+            Puzzle_Game.lblStatus.setText("Minimum number of moves: " + solver.moves());
             Stack<Board> stack = new Stack<Board>();
-            for (Board board : solver.solution())
-            	stack.push(board);
+            Board b=null;
+            for (Board board : solver.solution()){
+            	b=stack.push(board);
+                Puzzle_Game.steps.add(b.getStep());
+            }
             while(!stack.isEmpty()){
             	System.out.println(stack.pop());
             }
