@@ -1,3 +1,4 @@
+package defPackage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -6,6 +7,7 @@ import java.text.DecimalFormat;
 import java.util.*;
 import javax.swing.JOptionPane;
 
+
 @SuppressWarnings("serial")
 class Puzzle_Game extends JFrame {
 	
@@ -13,7 +15,7 @@ class Puzzle_Game extends JFrame {
 	public static ArrayList<ProfileObj> prf = new ArrayList<ProfileObj>();
 	private JPanel panel = new JPanel(new GridLayout(4, 4, 2, 2));
 	private static Random Random_Pos_Generetor = new Random();
-	private static int[][] num_array = new int[4][4];
+	static int[][] num_array = new int[4][4];
 	private javax.swing.Timer t;
 	private static long mil;
 	private JTextField txtUname;
@@ -211,6 +213,15 @@ class Puzzle_Game extends JFrame {
 
 		PauseButton.setBounds(10, 77, 115, 41);
 		getContentPane().add(PauseButton);
+		
+		JButton btnNewButton = new JButton("Solve");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Solver.Solve(num_array,4);
+			}
+		});
+		btnNewButton.setBounds(10, 127, 115, 41);
+		getContentPane().add(btnNewButton);
 		/////////////////////////////////////
 
 		repaintField(true);
@@ -242,9 +253,9 @@ class Puzzle_Game extends JFrame {
 	}
 
 	private boolean isSolvable(int[] invariants) {
-		int row = 0;//текущая строка
+		int row = 0;//Ñ‚ÐµÐºÑƒÑ‰Ð°Ñ� Ñ�Ñ‚Ñ€Ð¾ÐºÐ°
 		int parity = 0;
-		int blankrow = 0;//строка с пустой ячейкой
+		int blankrow = 0;//Ñ�Ñ‚Ñ€Ð¾ÐºÐ° Ñ� Ð¿ÑƒÑ�Ñ‚Ð¾Ð¹ Ñ�Ñ‡ÐµÐ¹ÐºÐ¾Ð¹
 		int gridwidth = (int) Math.sqrt(invariants.length);
 
 		for (int i = 0; i < invariants.length; i++) {
