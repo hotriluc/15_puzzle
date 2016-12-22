@@ -19,34 +19,10 @@ class Puzzle_Game extends JFrame {
 	private javax.swing.Timer t;
 	private static long mil;
 	private JTextField txtUname;
-	public static ArrayList<int[][]> steps = new ArrayList<int[][]>();
-	public static JLabel lblStatus = new JLabel("");
+
 	
-	private static int get_userID(String uname) {
-		int index = -1;
-		for (int i = 0; i < prf.size(); i++) {
-			if (prf.get(i).getName().equals(uname)) {
-				index = i;
-				break;
-			}
-		}
-		return index;
-	}
-
-	public static void setTime(long m) {
-		mil = m;
-
-	}
-
-	public static void setProgress(int[][] na) {
-		num_array = na;
-	}
-
-	private static void prfAdd(String uname, long mil, int[][] num_array) throws IOException {
-
-			Select.prf.add(new ProfileObj(uname, mil, num_array));
-			Select.serialize();
-	}
+	
+	
 
 	public static void main(String[] args) {
 
@@ -63,12 +39,13 @@ class Puzzle_Game extends JFrame {
 	}
 
 	public Puzzle_Game() {
+		
 		super("15_puzzle");
 		setLocationRelativeTo(null);
 		setTitle("15 Puzzle");
 		init();
 	}
-
+/////////////////////////////////////////////////////////////////////////////////
 	public void init() {
 
 		JLabel Time_Label = new JLabel("");
@@ -88,7 +65,10 @@ class Puzzle_Game extends JFrame {
 
 			}
 		});
+		
 		setVisible(true);
+	
+		
 		getContentPane().setBackground(SystemColor.menu);
 		setBounds(200, 200, 458, 392);
 		setResizable(false);
@@ -112,7 +92,6 @@ class Puzzle_Game extends JFrame {
 		NewGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mil = 0;
-				lblStatus.setText("");
 				Time_Label.setText(dc.format(mil) + " sec");
 
 				t.start();
@@ -143,10 +122,10 @@ class Puzzle_Game extends JFrame {
 		NewGameButton.setBounds(10, 25, 115, 41);
 		getContentPane().add(NewGameButton);
 
-		ExitButton.setBounds(10, 235, 115, 41);
+		ExitButton.setBounds(10, 207, 115, 41);
 		getContentPane().add(ExitButton);
 
-		Time_Label.setBounds(19, 275, 106, 75);
+		Time_Label.setBounds(19, 236, 106, 75);
 		getContentPane().add(Time_Label);
 
 		JLabel lblUname = new JLabel("Save as: ");
@@ -160,6 +139,7 @@ class Puzzle_Game extends JFrame {
 		////////////////////////////////////////////
 
 		JButton btnSave = new JButton("Save");
+		btnSave.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -217,26 +197,13 @@ class Puzzle_Game extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Solver.Solve(num_array,4);
-				for (int i=0;i<steps.size();i++){
-					System.out.println(steps.get(i).toString());
-					num_array=steps.get(i);
-			        repaintField();
-				}
 			}
 		});
 		btnNewButton.setBounds(10, 127, 115, 41);
 		getContentPane().add(btnNewButton);
-		lblStatus.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		
-		lblStatus.setBounds(15, 171, 115, 20);
-		getContentPane().add(lblStatus);
 		/////////////////////////////////////
 
 		repaintField(true);
-	}
-	
-	public void setStatus(String s){
-		
 	}
 
 	public void Scramble() {
@@ -265,9 +232,9 @@ class Puzzle_Game extends JFrame {
 	}
 
 	private boolean isSolvable(int[] invariants) {
-		int row = 0;//Ã‘â€šÃÂµÃÂºÃ‘Æ’Ã‘â€°ÃÂ°Ã‘ï¿½ Ã‘ï¿½Ã‘â€šÃ‘â‚¬ÃÂ¾ÃÂºÃÂ°
-		int parity = 0;
-		int blankrow = 0;//Ã‘ï¿½Ã‘â€šÃ‘â‚¬ÃÂ¾ÃÂºÃÂ° Ã‘ï¿½ ÃÂ¿Ã‘Æ’Ã‘ï¿½Ã‘â€šÃÂ¾ÃÂ¹ Ã‘ï¿½Ã‘â€¡ÃÂµÃÂ¹ÃÂºÃÂ¾ÃÂ¹
+		int row = 0;//ñòðîêà íà êîòîðîé ìû íàõîäèìñÿ
+		int parity = 0;//ïåðåìåííàÿ êîòîðàÿ áóäåò õðàíèòü 
+		int blankrow = 0;//ñòðîêà â êîòîðîé ïóñòàÿ ÿ÷åéêà
 		int gridwidth = (int) Math.sqrt(invariants.length);
 
 		for (int i = 0; i < invariants.length; i++) {
@@ -309,6 +276,7 @@ class Puzzle_Game extends JFrame {
 					JButton button = new JButton(Integer.toString(num_array[i][j]));
 					button.setFocusable(false);
 					panel.add(button);
+
 					if (num_array[i][j] == 0) {
 						button.setVisible(false);
 					} else {
@@ -328,25 +296,8 @@ class Puzzle_Game extends JFrame {
 		}
 
 	}
-	public void repaintField(){
-		panel.removeAll();
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-					JButton button = new JButton(Integer.toString(num_array[i][j]));
-					button.setFocusable(false);
-					panel.add(button);
-					if (num_array[i][j] == 0) {
-						button.setVisible(false);
-					} else {
-						button.addActionListener(new ClickListener());
-					}
-				} 
-
-			}
-		}
 
 
-	// panel.validate();
 
 	public boolean Check_if_Win() {
 		boolean status = true;
@@ -371,7 +322,6 @@ class Puzzle_Game extends JFrame {
 			change(Integer.parseInt(name));
 		}
 	}
-	
 
 	public void change(int num) {
 		int i = 0;
@@ -419,5 +369,32 @@ class Puzzle_Game extends JFrame {
 			setVisible(false);
 			setVisible(true);
 		}
+	}
+	
+	@SuppressWarnings("unused")
+	private static int get_userID(String uname) {
+		int index = -1;
+		for (int i = 0; i < prf.size(); i++) {
+			if (prf.get(i).getUname().equals(uname)) {
+				index = i;
+				break;
+			}
+		}
+		return index;
+	}
+
+	public  void setTime(long m) {
+		mil = m;
+
+	}
+
+	public  void setProgress(int[][] na) {
+		num_array = na;
+	}
+
+	private static void prfAdd(String uname, long mil, int[][] num_array) throws IOException {
+
+			Select.prf.add(new ProfileObj(uname, mil, num_array));
+			Select.serialize();
 	}
 }

@@ -8,7 +8,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JLabel;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,44 +15,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-class ProfileObj implements Serializable {
-	private static final long serialVersionUID = 1266395111447933184L;
-	public String username;
-    public long mil;
-    public int nums[][] = new int[4][4];
 
-	public ProfileObj(String uname, long m,int[][] pos) {
-		this.username=uname;
-		this.mil=m;
-		this.nums=pos;
-		
-	}
-		
-		public String getUname(){
-			return this.username;
-		}
-		
-		public long getMil(){
-			return this.mil;
-		}
-		
 	
-	public ProfileObj(){
-		
-	}
-
-	public String getName() {
-		return username;
-	}
-	
-	public int[][] getProgress() {
-		return nums;
-	}
-
-
-}
-	 @SuppressWarnings("serial")
 	class Select extends JFrame {
+	
+		private static final long serialVersionUID = 1L;
 		public static ArrayList<ProfileObj> prf = new ArrayList<ProfileObj>();
 	    private static final String fname="users.prf";
 
@@ -122,7 +88,7 @@ class ProfileObj implements Serializable {
 				public void actionPerformed(ActionEvent e) {
 					String u=prof_list.getSelectedValue();
 					for (int i=0;i<prf.size();i++){
-						if (prf.get(i).getName().equals(u)){
+						if (prf.get(i).getUname().equals(u)){
 							    prf.remove(i);
 								lModel.removeAllElements();
 								try {
@@ -152,9 +118,9 @@ class ProfileObj implements Serializable {
 				public void actionPerformed(ActionEvent arg0) {
 					if (prof_list.isSelectionEmpty()!=true){
 					setVisible(false);
-					MainMenu m = new MainMenu ();
+					Puzzle_Game game = new Puzzle_Game ();
 					setVisible(false);
-					m.setVisible(true);
+					
 					
 					String n = prof_list.getSelectedValue();
 					for (int i=0;i<prf.size();i++){
@@ -164,8 +130,10 @@ class ProfileObj implements Serializable {
 							
 						//	System.out.println(pos[0][0]);
 							//System.out.println(pos[0][1]);
-							Puzzle_Game.setTime(mil);
-							Puzzle_Game.setProgress(pos);	
+							game.setTime(mil);
+							game.setProgress(pos);	
+							game.repaintField(true);
+							game.setVisible(true);
 							
 						}
 						}
