@@ -64,7 +64,7 @@ public class MainMenu extends JFrame  {
 				setVisible(false);
 				JFrame fr = null;
 				try {
-					fr = new Select();
+					fr = new SelectWindow();
 				} catch (ClassNotFoundException | IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

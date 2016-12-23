@@ -45,7 +45,7 @@ class Puzzle_Game extends JFrame {
 		setTitle("15 Puzzle");
 		init();
 	}
-/////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
 	public void init() {
 
 		JLabel Time_Label = new JLabel("");
@@ -231,7 +231,7 @@ class Puzzle_Game extends JFrame {
 		repaintField(true);
 	}
 
-	private boolean isSolvable(int[] invariants) {
+	public boolean isSolvable(int[] invariants) {
 		int row = 0;//строка на которой мы находимся
 		int parity = 0;//переменная которая будет хранить 
 		int blankrow = 0;//строка в которой пустая ячейка
