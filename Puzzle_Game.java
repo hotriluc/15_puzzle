@@ -244,9 +244,9 @@ class Puzzle_Game extends JFrame {
 	}
 
 	public boolean isSolvable(int[] invariants) {
-		int row = 0;//строка на которой мы находимся
-		int parity = 0;//переменная которая будет хранить 
-		int blankrow = 0;//строка в которой пустая ячейка
+		int row = 0;//Г±ГІГ°Г®ГЄГ  Г­Г  ГЄГ®ГІГ®Г°Г®Г© Г¬Г» Г­Г ГµГ®Г¤ГЁГ¬Г±Гї
+		int parity = 0;//ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г Гї ГЄГ®ГІГ®Г°Г Гї ГЎГіГ¤ГҐГІ ГµГ°Г Г­ГЁГІГј 
+		int blankrow = 0;//Г±ГІГ°Г®ГЄГ  Гў ГЄГ®ГІГ®Г°Г®Г© ГЇГіГ±ГІГ Гї ГїГ·ГҐГ©ГЄГ 
 		int gridwidth = (int) Math.sqrt(invariants.length);
 
 		for (int i = 0; i < invariants.length; i++) {
@@ -383,17 +383,6 @@ class Puzzle_Game extends JFrame {
 		}
 	}
 	
-	@SuppressWarnings("unused")
-	private static int get_userID(String uname) {
-		int index = -1;
-		for (int i = 0; i < prf.size(); i++) {
-			if (prf.get(i).getUname().equals(uname)) {
-				index = i;
-				break;
-			}
-		}
-		return index;
-	}
 
 	public  void setTime(long m) {
 		mil = m;
