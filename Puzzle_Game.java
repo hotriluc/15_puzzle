@@ -164,43 +164,55 @@ class Puzzle_Game extends JFrame {
 		JButton PauseButton = new JButton("Pause");
 		PauseButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
 
+		JButton ResumeButton = new JButton("Resume");
+		ResumeButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
+		ResumeButton.setBounds(10, 77, 115, 41);
+		
 		PauseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				t.stop();
 				repaintField(false);
 				PauseButton.setVisible(false);
 
-				JButton ResumeButton = new JButton("Resume");
-				ResumeButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
-				ResumeButton.setBounds(10, 77, 115, 41);
-
 				getContentPane().add(ResumeButton);
-				ResumeButton.addActionListener(new ActionListener() {
-
-					public void actionPerformed(ActionEvent e) {
-						ResumeButton.setVisible(false);
-						t.start();
-						repaintField(true);
-						PauseButton.setVisible(true);
-					}
-
-				});
+				ResumeButton.setVisible(true);
 
 			}
+		});
+		
+		ResumeButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				ResumeButton.setVisible(false);
+				t.start();
+				repaintField(true);
+				getContentPane().add(PauseButton);
+				PauseButton.setVisible(true);
+				
+			}
+
 		});
 
 		PauseButton.setBounds(10, 77, 115, 41);
 		getContentPane().add(PauseButton);
 		
-		JButton btnNewButton = new JButton("Solve");
-		btnNewButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton SolveButton = new JButton("Solve");
+		SolveButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
+		SolveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				t.stop();
+				repaintField(false);
+				PauseButton.setVisible(false);
+				getContentPane().add(ResumeButton);
+				ResumeButton.setVisible(true);
+				
 				Solver.Solve(num_array,4);
+				
+				
 			}
 		});
-		btnNewButton.setBounds(10, 127, 115, 41);
-		getContentPane().add(btnNewButton);
+		SolveButton.setBounds(10, 127, 115, 41);
+		getContentPane().add(SolveButton);
 		/////////////////////////////////////
 
 		repaintField(true);

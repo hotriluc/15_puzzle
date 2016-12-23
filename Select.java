@@ -1,5 +1,5 @@
 package defPackage;
-import javax.swing.JFrame;
+
 import java.util.ArrayList;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -32,10 +32,7 @@ import java.io.ObjectOutputStream;
 	         fos.close();
 		}
 		
-	public static void main(String[] args) throws IOException, ClassNotFoundException{
-		Select s = new Select();
-	
-	}
+
 
 		
 
