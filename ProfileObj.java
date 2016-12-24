@@ -1,8 +1,13 @@
 package defPackage;
 import java.io.Serializable;
 
+
 class ProfileObj implements Serializable {
-	public static final long serialVersionUID = 1266395111447933184L;
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public String username;
     public long mil;
     public int nums[][] = new int[4][4];

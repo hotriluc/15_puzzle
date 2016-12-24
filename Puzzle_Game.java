@@ -8,10 +8,14 @@ import java.util.*;
 import javax.swing.JOptionPane;
 
 
-@SuppressWarnings("serial")
+
 class Puzzle_Game extends JFrame {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static ArrayList<ProfileObj> prf = new ArrayList<ProfileObj>();
 	private JPanel panel = new JPanel(new GridLayout(4, 4, 2, 2));
 	private static Random Random_Pos_Generetor = new Random();
@@ -85,12 +89,49 @@ class Puzzle_Game extends JFrame {
 		panel.setBounds(135, 22, 300, 300);
 		panel.setBackground(SystemColor.inactiveCaption);
 		container.add(panel);
+		
+		JButton PauseButton = new JButton("Pause");
+		PauseButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
+
+		JButton ResumeButton = new JButton("Resume");
+		ResumeButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
+		ResumeButton.setBounds(10, 77, 115, 41);
+		
+		PauseButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				t.stop();
+				repaintField(false);
+				PauseButton.setVisible(false);
+
+				getContentPane().add(ResumeButton);
+				ResumeButton.setVisible(true);
+
+			}
+		});
+		
+		ResumeButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				ResumeButton.setVisible(false);
+				t.start();
+				repaintField(true);
+				getContentPane().add(PauseButton);
+				PauseButton.setVisible(true);
+				
+			}
+
+		});
+
+		PauseButton.setBounds(10, 77, 115, 41);
+		getContentPane().add(PauseButton);
 
 		////////////////////////////////////////////////////////////////////
 		JButton NewGameButton = new JButton("New Position");// New_game_button
 		NewGameButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
 		NewGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				PauseButton.setVisible(true);
+				
 				mil = 0;
 				Time_Label.setText(dc.format(mil) + " sec");
 
@@ -161,40 +202,7 @@ class Puzzle_Game extends JFrame {
 		getContentPane().add(btnSave);
 		//////////////////////////////////////
 
-		JButton PauseButton = new JButton("Pause");
-		PauseButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
-
-		JButton ResumeButton = new JButton("Resume");
-		ResumeButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
-		ResumeButton.setBounds(10, 77, 115, 41);
 		
-		PauseButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				t.stop();
-				repaintField(false);
-				PauseButton.setVisible(false);
-
-				getContentPane().add(ResumeButton);
-				ResumeButton.setVisible(true);
-
-			}
-		});
-		
-		ResumeButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				ResumeButton.setVisible(false);
-				t.start();
-				repaintField(true);
-				getContentPane().add(PauseButton);
-				PauseButton.setVisible(true);
-				
-			}
-
-		});
-
-		PauseButton.setBounds(10, 77, 115, 41);
-		getContentPane().add(PauseButton);
 		
 		JButton SolveButton = new JButton("Solve");
 		SolveButton.setFont(new Font("Showcard Gothic", Font.PLAIN, 11));
@@ -267,9 +275,9 @@ class Puzzle_Game extends JFrame {
 
 		if (gridwidth % 2 == 0) {
 			if (blankrow % 2 == 0) {
-				return parity % 2 == 0;
+				return parity % 2 == 0; // vozvrasaem true esli chislo chetno
 			} else {
-				return parity % 2 != 0; 
+				return parity % 2 != 0; //vozvrashem true esli chislo ne chetno 
 			}
 
 		} else {
@@ -285,8 +293,13 @@ class Puzzle_Game extends JFrame {
 			for (int j = 0; j < 4; j++) {
 
 				if (clickable == true) {
+				
 					JButton button = new JButton(Integer.toString(num_array[i][j]));
+					
+					//button.setFont(new Font("Showcard Gothic", Font.PLAIN, 15));
 					button.setFocusable(false);
+					
+					
 					panel.add(button);
 
 					if (num_array[i][j] == 0) {

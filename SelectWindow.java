@@ -13,11 +13,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
+@SuppressWarnings("serial")
 public class SelectWindow extends JFrame {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	
 
 	
 	public SelectWindow() throws ClassNotFoundException, IOException{
