@@ -387,7 +387,7 @@ class Puzzle_Game extends JFrame {
 		if (Check_if_Win()) {
 			t.stop();
 
-			JOptionPane.showMessageDialog(null, "YOU WON", "MESSAGE", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(null, "YOU DID IT! GOOD JOB!", "MESSAGE", JOptionPane.PLAIN_MESSAGE);
 
 			panel.removeAll();
 
